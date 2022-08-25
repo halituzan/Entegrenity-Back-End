@@ -16,13 +16,12 @@ module.exports.checkUser = (req, res, next) => {
             status: true,
             id: user._id,
           });
-        } else res.json({ message: "Yetkilendirmeniz Bulunmamaktadır." });
-
+        } else res.json({ status: false });
         next();
       }
     });
   } else {
-    res.json({ message: "Yetkilendirmeniz Bulunmamaktadır." });
+    res.json({ status: false });
     next();
   }
 };
@@ -39,14 +38,16 @@ module.exports.info = async (req, res, next) => {
         const user = await User.findById(decodedToken.id);
         if (user) {
           res.json(user);
-        } else res.render("index")
-
+        } else {
+          res.render("index");
+          // res.json({ status: false });
+        }
         next();
       }
     });
   } else {
-    // res.json({ message: "Yetkilendirmeniz Bulunmamaktadır." });
-    res.render("index")
+    res.render("index");
+    // res.json({ status: false });
 
     next();
   }

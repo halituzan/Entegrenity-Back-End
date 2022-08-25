@@ -25,7 +25,13 @@ mongoose
   })
   .catch((err) => console.log(err.message));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
+    method: ["GET", "POST","PUT"],
+    credentials: true,
+  })
+);
 
 app.use(cookieParser());
 app.use(express.json());
