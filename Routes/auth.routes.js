@@ -1,8 +1,6 @@
 const router = require("express").Router();
-
-const { register, login, info } = require("../Controllers/auth.controllers");
-
-const { checkUser } = require("../Middlewares/auth.middleware");
+const { register, login  } = require("../Controllers/auth.controllers");
+const { checkUser,info } = require("../Middlewares/auth.middleware");
 
 router.post("/", checkUser);
 router.post("/register", register);

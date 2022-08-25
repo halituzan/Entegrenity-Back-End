@@ -1,6 +1,5 @@
 const User = require("../Models/userModel");
 const jwt = require("jsonwebtoken");
-const jwt_decode = require("jwt-decode");
 
 const maxAge = 3 * 24 * 60 * 60;
 
@@ -38,28 +37,6 @@ const handleErrors = (err) => {
   return errors;
 };
 
-module.exports.info = async (req, res, next) => {
-  const param = req.params.id;
-  const token = req.cookies.jwt;
-  if (token) {
-    jwt.verify(token, "ty hb entegrenity com", async (err, decodedToken) => {
-      if (err) {
-        res.json({ status: false });
-        next();
-      } else {
-        const user = await User.findById(decodedToken.id);
-        if (user) {
-          res.json(data);
-        } else res.json({ status: false });
-        next();
-      }
-    });
-  } else {
-    res.json({ status: false });
-    next();
-  }
-
-};
 
 module.exports.register = async (req, res, next) => {
   try {
