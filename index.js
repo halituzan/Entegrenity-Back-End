@@ -5,29 +5,28 @@ const authRoutes = require("./Routes/auth.routes");
 const crudRoutes = require("./Routes/crud.routes");
 const app = express();
 const cookieParser = require("cookie-parser");
-require('dotenv').config()
+require("dotenv").config();
 
-app.listen(4000, () => {
-  console.log("server Started on PORT 4000");
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log("server Started on PORT " + PORT);
 });
 
 mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://halituzan:3035035169Hu.@cluster0.xm8zxmu.mongodb.net/jwt",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("DB connected");
   })
   .catch((err) => console.log(err.message));
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
-    method: ["GET", "POST"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(cookieParser());
 app.use(express.json());
