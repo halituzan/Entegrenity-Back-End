@@ -1,4 +1,4 @@
-const userModel = require("../Models/userModel");
+const User = require("../Models/userModel");
 const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
 
@@ -40,21 +40,32 @@ const handleErrors = (err) => {
 
 module.exports.info = async (req, res, next) => {
   const param = req.params.id;
-  userModel
-    .findById(param)
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.json(err.message);
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, "ty hb entegrenity com", async (err, decodedToken) => {
+      if (err) {
+        res.json({ status: false });
+        next();
+      } else {
+        const user = await User.findById(decodedToken.id);
+        if (user) {
+          res.json(data);
+        } else res.json({ status: false });
+        next();
+      }
     });
+  } else {
+    res.json({ status: false });
+    next();
+  }
+
 };
 
 module.exports.register = async (req, res, next) => {
   try {
     const { email, password, phone, name, surname, userRole, groups } =
       req.body;
-    const user = await userModel.create({
+    const user = await User.create({
       email,
       password,
       phone,
@@ -80,7 +91,7 @@ module.exports.login = async (req, res, next) => {
   console.log(req.body);
   try {
     const { email, password } = req.body;
-    const user = await userModel.login(email, password);
+    const user = await User.login(email, password);
     const token = createToken(user._id);
     res.cookie("jwt", token, {
       withCredintials: true,
