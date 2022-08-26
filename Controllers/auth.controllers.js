@@ -73,9 +73,9 @@ module.exports.login = async (req, res, next) => {
     res.cookie("jwt", token, {
       withCredintials: true,
       secure:true,
-      httpOnly: false,
+      httpOnly: true,
       maxAge: maxAge * 1000,
-      SameSite: "none",
+      SameSite: none,
     });
     res.status(200).json({ user: user._id, created: true });
   } catch (error) {
