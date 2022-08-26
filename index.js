@@ -6,14 +6,13 @@ const crudRoutes = require("./Routes/crud.routes");
 const app = express();
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
-app.set('views', './views');
-app.set('view engine', 'pug');
+app.set("views", "./views");
+app.set("view engine", "pug");
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log("server Started on PORT " + PORT);
 });
-
 
 mongoose
   .connect(process.env.DATABASE, {
@@ -28,7 +27,7 @@ mongoose
 app.use(
   cors({
     origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
-    method: ["GET", "POST","PUT"],
+    method: ["GET", "POST", "PUT"],
     credentials: true,
   })
 );

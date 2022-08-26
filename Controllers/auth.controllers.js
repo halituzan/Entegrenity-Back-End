@@ -50,6 +50,7 @@ module.exports.register = async (req, res, next) => {
       groups,
     });
     const token = createToken(user._id);
+  
     res.cookie("jwt", token, {
       withCredintials: true,
       httpOnly: false,
@@ -68,6 +69,7 @@ module.exports.login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.login(email, password);
     const token = createToken(user._id);
+    console.log(token);
     res.cookie("jwt", token, {
       withCredintials: true,
       httpOnly: false,
