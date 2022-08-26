@@ -39,15 +39,13 @@ module.exports.info = async (req, res, next) => {
         if (user) {
           res.json(user);
         } else {
-          res.render("index");
-          // res.json({ status: false });
+          res.json({ status: false });
         }
         next();
       }
     });
   } else {
-    res.render("index");
-    // res.json({ status: false });
+    res.json({ status: false });
 
     next();
   }
