@@ -74,7 +74,7 @@ module.exports.login = async (req, res, next) => {
       secure:true,
       httpOnly: true,
       maxAge: maxAge * 1000,
-      SameSite: "None",
+      sameSite: "none",
     });
     res.status(200).json({ user: user._id, created: true });
   } catch (error) {
